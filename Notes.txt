@@ -1,0 +1,267 @@
+// Node.js --> V8 engine + C++.
+javaScript runtime enviroment,
+it is used for server side programing.
+
+we can run node in terminal also.
+
+// i can easily use the data from other file but in same directory
+module.exports --> export 
+const someValue = require("./roughl"); --> use the export data
+
+// npm --> lekha jokha different package ko install kar skte hain
+
+installing and uninstalling packages by terminal (npm)
+npm init -y
+install --> npm i packagekaname
+uninstall --> npm uninstall packagekaname
+installing particular packages --version
+
+03 fs.readfile, create folder 
+
+// http and https
+protocol ---> rules
+
+// node_modules
+
+dependencies = package and packages dependencies ( package 1 ---> already depend package 2 == node_modules ke andr total 2 packages are install but 1 packages automatically will come )
+
+dev dependencies = those package which are helps in development are called that.
+these packages are not useful after deployed
+
+custom scripts can br created while building app
+
+// library vs framework
+
+A library is collection of pre-written code that can be used to perform specific tasks. eg-axios
+
+A framework is a set of pre-written code that provide a structure for developing software applicaton. eg-express
+
+// Express.js -- Framework
+manage everything from recieving the request and giving the response
+install - npm i express
+
+// for live reloading/refresh the browser automatically
+install --> npm i nodemon  -- global ---> npm i nodemon -g 
+running --> npx nodemon file name
+
+// Routing 
+
+it is process of selecting a path for traffic in a network or between or across multiple metworks.
+
+// Middleware
+ye ek function hota hai jo request aane ke baad aur response bhejne se pehle kaam karta hai.
+iske through hum request ko modify kar sakte hain, check kar sakte hain user login hai ya nahi, ya phir request ka data dekh sakte hain.
+express me middleware har request ke bich me kaam karta hai, jaise ek checkpoint.
+
+
+// Error Handler
+// Frontend
+app.get('/profile', (req, res, next) => {
+    return next(new Error("Something went wrong"))
+})
+
+// backend
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.send("Something broke!")
+})
+
+👉 Rule of Thumb:
+
+Throw error → If you already have an error middleware.
+Return response → If you want custom handling inline.
+
+// cookie
+client ---> request -----> server (Who are you?) // ---> [Login]
+client ---> login ---> request ---> server (Ok) ---> response
+NEXT TIME
+client ---> request -----> server (Who are you?) // ---> [Login]
+client ---> login ---> request ---> server (Ok) ---> response
+EVERYTIME -- ITS IRRITATING
+We use cookie
+client ---> request -----> server (Who are you?) // ---> [Login]
+client ---> login ---> server (cookie--code/password --> client(frontend) same code server(backend))
+clent --> request ---> server check (cookie) then handle request ---> response
+
+
+command 
+
+const cookieParser = require('cookie-parser'); // Middleware to parse cookies from requests
+app.use(cookieParser());
+
+
+THE WHOLE PROCESS SESSION
+
+// EJS
+
+EJS (Embedded JavaScript) ek templating engine hai jo Node.js/Express.js ke sath use hoti hai. Iska use dynamic HTML pages banane ke liye hota hai. EJS me aap JavaScript code ko HTML ke andar likh sakte hain, jisse aap data ko easily web page par show kar sakte hain.
+  
+Example:
+Aap <%= data %> likh kar variable ka value HTML me dikha sakte hain.
+
+install --> npm install ejs
+
+Use karne ke liye:
+Express app me set karte hain: app.set('view engine', 'ejs')
+
+Isse aap dynamic web pages bana sakte hain jo backend data ko frontend par dikhate hain.
+
+//folder path
+const path = require('path'); ---> package
+
+console.log(path.join(__dirname, 'public'))  ---> statement
+
+<!-- NOTE --> EJS 
+NOT REQUIREMENT OF FULL PATH WHEN CONNECTED TO CSS FILE AND OTHERS -->
+
+// Dynamic routing
+Dynamic routing ka use Express.js (ya kisi bhi web framework) me aise routes banane ke liye hota hai jo URL ke andar variable part accept karte hain. Isse aap ek hi route handler se alag-alag data ya pages dikha sakte hain, bina har ek ke liye alag route likhe.
+
+Example:
+Agar aapko user profile dikhani hai, toh instead of /user1, /user2, /user3 alag-alag likhne ke, aap ek hi dynamic route bana sakte hain:
+
+app.get('/user/:username', (req, res) => {
+  res.send(`Hello, ${req.params.username}`);
+});
+
+Yaha :username dynamic hai, jo bhi URL me aayega wo value ban jayegi.
+Use:
+
+Alag-alag users, products, articles, etc. ke liye ek hi route handler use kar sakte hain.
+Code short aur maintainable rehta hai.
+
+
+// MongoDB -- database
+
+Data Storage : local browser, local system, database
+
+Database 2 types ==> SQL(store as Table form) | NoSQL(store as object form)
+
+NoSQL --> MongoDB
+
+backend 2 server  --> App server(node.js) + database server(MongoDB)
+
+Database --> Collection --> Document 
+
+What happening in code?
+
+CODE                             Database
+-----------------------------------------------------------------------------------
+mongoose.connect      -->       database create
+model create          -->       Collection
+CREATE                -->       Document
+
+
+package --> npm i mongoose
+create = usermodel.js
+
+// This module defines a Mongoose model for a user in a MongoDB database.
+const mongoose = require('mongoose');
+
+// Connect to the MongoDB database
+mongoose.connect('mongodb://localhost:27017/userdata');
+// Define a schema for the user
+// This schema defines the structure of the user documents in the MongoDB collection
+const userSchema = mongoose.Schema({
+    name: String,
+    email: String,
+    password: String,
+    age: Number,
+    location: String
+});
+
+// Create a model from the schema
+module.exports = mongoose.model('user', userSchema);
+
+import actual file --> const userModel = require('./usermodel') // Import the user model
+
+different feature ;-
+C --> create
+R --> read
+U --> update
+D --> delete
+
+// Authentication and authorization
+
+Who are you? --> login --> now, server actually know who are you.
+repeative question problem --> cookie --> whole process --> SESSION
+Are you an admin? (authorized to perform some task which are only allowed to be executed by the admin only)
+
+package install --> npm i jsonwebtoken bcrypt
+
+package install --> npm i cookie-parser
+
+file 
+
+const  cookieParser = require('cookie-parser'); // Import cookie-parser
+
+app.use(cookieParser()); // Use cookie-parser middleware to parse cookies
+
+// Bcrypt 
+Bcrypt ek library hai jo passwords ko secure banane ke liye use hoti hai. Jab bhi koi user apna password deta hai (signup ya login ke time), hum us password ko direct database me nahi rakhte. Usko "hash" kar dete hain, yani ek aise code me badal dete hain jo wapas original password me convert nahi ho sakta.
+
+in short --> Bcrypt tumhare password ko ek aise code me badal deta hai jo secure hai, aur wapas asli password me convert nahi ho sakta. Isse tumhara data safe rehta hai.
+
+To hash a password:
+const bcrypt = require('bcrypt');
+
+routes {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash("pololo", salt, (err, hash) => {
+            console.log(hash);
+            res.send('Password hashed successfully!');
+        })
+    })
+}
+
+pololo --> actual password
+bcrypt password --> $2b$10$heJwfaZnEwZstgs4OjqqbOwjpqBGpm28fGtkImsJJbheAN3rnm2h2
+
+// To check a password:
+
+bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
+    // result == true
+});
+
+myPlaintextPassword --> actual password
+hash --> bcrypt password
+
+
+// JWT 
+JWT ka full form hai JSON Web Token. Ye ek secure tarika hai user ko identify karne ka, bina har baar database check kiye.
+
+Real life example:
+Socho tum ek cinema hall me ja rahe ho. Entry pe tumhe ek ticket milti hai, jisme tumhara naam, seat number, aur ek secret code hota hai. Jab bhi tum andar kisi guard ko ticket dikhate ho, wo sirf ticket check karta hai, baar-baar tumhara ID proof nahi mangta. Agar ticket valid hai, tum andar ja sakte ho.
+
+JWT bhi waise hi kaam karta hai:
+
+Jab user login karta hai, server ek JWT token bana ke user ko de deta hai (jaise cinema ticket).
+Is token me user ki info (jaise user id, role, etc.) aur ek secret code hota hai.
+Jab bhi user koi protected route pe request bhejta hai, wo apna JWT token bhejta hai (jaise ticket dikhana).
+Server sirf token verify karta hai, database baar-baar nahi dekhta.
+Agar token valid hai, access milta hai. Nahi to "unauthorized" bol deta hai.
+Short me:
+JWT ek digital ticket hai jo proof karta hai ki user kaun hai, bina baar-baar login karaye. Secure bhi hai, fast bhi hai!
+
+Command
+const jwt = require('jasonwebtoken')
+
+// Root route: Generates a JWT token and sets it as a cookie in the user's browser
+app.get('/', (req, res) => {
+    // Create a JWT token with email as payload and 'secretkey' as the secret
+    let token = jwt.sign({email: "piyush@gmail.com"}, 'secretkey');
+    // Set the token in a cookie named "token"
+    res.cookie("token", token);
+    res.send('Cookie has been set with JWT token!');
+});
+
+// /home route: Reads the JWT token from cookies and verifies it
+app.get('/home', (req, res) => {
+    // Verify the token using the same secret key
+    let data = jwt.verify(req.cookies.token, 'secretkey');
+    // Log the decoded data (payload) from the token
+    console.log(data);
+    // (Optional) You can send a response to the client here
+    res.send('Token verified! Check server console for payload.');
+});
+
