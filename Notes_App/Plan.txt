@@ -2,3 +2,31 @@
     Title = Heading
     Description = Details
 
+2. GET Method
+    notes {
+        {   Title = Heading                   index = 0
+            Description = Details
+        }
+        {   Title = Heading                   index = 1
+            Description = Details
+        }
+        {   Title = Heading                   index = 2
+            Description = Details
+        }
+        {   Title = Heading                   index = 3
+            Description = Details
+        }
+    }
+
+3. DELETE Method = index = 3 = delete
+    notes {
+        {   Title = Heading                   index = 0
+            Description = Details
+        }
+        {   Title = Heading                   index = 1
+            Description = Details
+        }
+        {   Title = Heading                   index = 2
+            Description = Details
+        }
+    }
