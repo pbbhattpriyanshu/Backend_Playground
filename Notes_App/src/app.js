@@ -24,11 +24,11 @@ app.get('/notes', (req, res) => {
     });
 });
 
-app.delete('/delete/:id', (req, res) => {
+app.delete('/delete/:index', (req, res) => {
     // Logic to delete a note by index
-    const noteId = parseInt(req.params.id, 10);
-    if (noteId >= 0 && noteId < Notes.length) {
-        Notes.splice(noteId, 1);
+    const noteIndex = parseInt(req.params.index, 10);
+    if (noteIndex >= 0 && noteIndex < Notes.length) {
+        Notes.splice(noteIndex, 1);
         res.status(200).json({message: 'Note deleted successfully!', notes: Notes});
     } else {
         res.status(404).json({message: 'Note not found!'});
