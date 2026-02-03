@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 
 // Define a simple route
+// req = request send by client, res = response send by server
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 })
