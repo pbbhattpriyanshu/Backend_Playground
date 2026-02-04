@@ -1,12 +1,14 @@
 const app = require('./src/app'); // Import the Express app instance
+require('dotenv').config();
+const connect = require('./src/database/db'); // Import the database connection function
+
+const PORT = process.env.PORT || 4000;
+
+// Connect to the database
+connect();
 
 
 
-
-
-
-
-
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
