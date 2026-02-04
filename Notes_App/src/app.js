@@ -27,10 +27,7 @@ app.get('/notes', (req, res) => {
 app.patch("/update/:index", (req, res) => {
     //Logic to update note
     const index = req.params.index;
-    const {title, description} = req.body;
-
-    Notes[index].title = title;
-    Notes[index].description = description;
+    Notes[index] = req.body;
 
     res.status(200).json({ message: "note update successfully", note: Notes})
 })
