@@ -24,6 +24,17 @@ app.get('/notes', (req, res) => {
     });
 });
 
+app.patch("/update/:index", (req, res) => {
+    //Logic to update note
+    const index = req.params.index;
+    const {title, description} = req.body;
+
+    Notes[index].title = title;
+    Notes[index].description = description;
+
+    res.status(200).json({ message: "note update successfully", note: Notes})
+})
+
 app.delete('/delete/:index', (req, res) => {
     // Logic to delete a note by index
     const noteIndex = parseInt(req.params.index, 10);
