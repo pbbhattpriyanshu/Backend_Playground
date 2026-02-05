@@ -23,5 +23,10 @@ app.post('/create-post', upload.single("image") , async (req, res) => {
     res.status(200).json({message: "Post created successfully", post: newPost});
 });
 
+app.get('/posts', async (req, res) => {
+    const posts = await postModel.find();
+    res.status(200).json({message: "Posts retrieved successfully", posts: posts});
+})
+
 
 module.exports = app; // Export the Express app instance
