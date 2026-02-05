@@ -13,8 +13,7 @@ app.get('/', (req, res) => {
 
 app.post('/create-post', upload.single("image") , async (req, res) => {
     const result = await uploadFile(req.file.buffer, req.file.originalname);
-    console.log(result);
-    res.json({message: "Post created successfully", imageUrl: result.url});
+    res.status(200).json({message: "Post created successfully", imageUrl: result.url});
 });
 
 

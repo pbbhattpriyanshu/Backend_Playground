@@ -8,14 +8,14 @@ const imagekit  = new ImageKit({
 
 // Function to upload a file
 async function uploadFile(buffer, filename) {
-    console.log(buffer);
-    
     try {
         const result = await imagekit.files.upload({
             file: buffer.toString('base64'), // Convert buffer to base64 string
             fileName: filename,
         });
+        
         return result;
+
     } catch (error) {
         throw error;
     }
