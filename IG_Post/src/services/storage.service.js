@@ -1,4 +1,5 @@
-const ImageKit = require('imagekit');
+const { ImageKit } = require('@imagekit/nodejs');
+require('dotenv').config();
 
 // Initialize ImageKit with your credentials
 const imagekit  = new ImageKit({
@@ -7,9 +8,11 @@ const imagekit  = new ImageKit({
 
 // Function to upload a file
 async function uploadFile(buffer, filename) {
+    console.log(buffer);
+    
     try {
-        const result = await imagekit.upload({
-            file: buffer,
+        const result = await imagekit.files.upload({
+            file: buffer.toString('base64'), // Convert buffer to base64 string
             fileName: filename,
         });
         return result;
