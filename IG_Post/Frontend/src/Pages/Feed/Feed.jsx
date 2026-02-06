@@ -3,18 +3,7 @@ import axios from "axios";
 import "./Feed.css";
 
 const Feed = () => {
-  const [ posts, setPosts ] = useState([
-    {
-      _id: 1,
-      image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d",
-      caption: "Calm days, sharp thoughts ☀️",
-    },
-    {
-      _id: 2,
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-      caption: "Building ideas into reality 💻",
-    }
-  ])
+  const [ posts, setPosts ] = useState([]);
 
   useEffect(() => {
       axios.get("http://localhost:3000/posts")
