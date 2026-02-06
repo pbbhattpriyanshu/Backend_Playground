@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Feed.css";
 
 const Feed = () => {
@@ -14,6 +15,19 @@ const Feed = () => {
       caption: "Building ideas into reality 💻",
     }
   ])
+
+  useEffect(() => {
+      axios.get("http://localhost:3000/posts")
+        .then((response) => {
+          console.log(response.data);
+          setPosts(response.data.posts);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+        });
+  }, [])
+
+
   return (
      <div className="feed-wrapper">
       <div className="feed">
