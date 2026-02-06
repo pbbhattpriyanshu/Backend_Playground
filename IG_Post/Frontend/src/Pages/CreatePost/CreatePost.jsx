@@ -1,8 +1,11 @@
 import React from "react";
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 import "./CreatePost.css";
 
 const CreatePost = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -13,6 +16,7 @@ const CreatePost = () => {
       console.log(response);
       
       e.target.reset();
+      navigate("/"); // Redirect to the feed page
     }) .catch((error) => {
       console.error("Error creating post:", error);
       alert("Failed to create post. Please try again.");
