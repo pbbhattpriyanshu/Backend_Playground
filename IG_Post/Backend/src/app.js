@@ -11,6 +11,6 @@ app.get('/', (req, res) => {
     res.send('Welcome to the IG Post API');
 });
 
-app.use(postRoutes); // Use the post routes with a base path of /api
+app.use(postRoutes);
 
 module.exports = app; // Export the Express app instance
