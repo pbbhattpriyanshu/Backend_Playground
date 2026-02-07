@@ -1,7 +1,7 @@
-const uploadFile = require("./services/storage.service");
-const postModel = require("./models/post.model");
+const uploadFile = require("../services/storage.service");
+const postModel = require("../models/post.model");
 
-export const createPost = async (req, res) => {
+const createPost = async (req, res) => {
   try {
     const result = await uploadFile(req.file.buffer, req.file.originalname);
 
@@ -18,7 +18,7 @@ export const createPost = async (req, res) => {
   }
 };
 
-export const getPosts = async (req, res) => {
+const getPosts = async (req, res) => {
   try {
     const posts = await postModel.find();
 
@@ -29,3 +29,6 @@ export const getPosts = async (req, res) => {
     console.log(`Error in Get Post Controller ${error}`);
   }
 };
+
+
+module.exports = { createPost, getPosts };
