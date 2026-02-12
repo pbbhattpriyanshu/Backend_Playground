@@ -32,7 +32,7 @@ const signup = async (req, res) => {
   }
 
   try {
-    const isUserExist = await userModel.findOne({ email });
+    const isUserExist = await userModel.findOne({ $or: [ {username}, {email} ] });
 
     if (isUserExist) {
       return res.status(409).json({ message: "User already exists" });
