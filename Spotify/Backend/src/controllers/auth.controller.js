@@ -1,10 +1,11 @@
 const userModel = require("../models/user.model");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const signup = async (req, res) => {
   // Extract email, username, and password from the request body
-  const { email, username, password } = req.body;
+  const { email, username, password, role = "user" } = req.body;
 
   // Email validation
   const isEmailValid = validator.isEmail(email);
@@ -38,14 +39,16 @@ const signup = async (req, res) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    const user = await userModel.create({ email, username, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const user = await userModel.create({ email, username, password: hashedPassword, role });
+
+    const token = jwt.sign({ id: user._id, user: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
     res.cookie("token", token);
-    res.status(201).json({ message: "User created successfully", user });
+    res.status(201).json({ message: "User created successfully", user: {id: user._id, username: user.username, role: user.role }});
   } catch (error) {
     res
       .status(500)

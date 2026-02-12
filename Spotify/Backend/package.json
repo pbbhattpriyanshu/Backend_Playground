@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "This is Spotify app which has manily 2 profile - user who only listen and user who create the music",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
