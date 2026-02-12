@@ -56,4 +56,41 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = { signup };
+const login = async (req, res) => {
+  // Extract email, username, and password from the request body
+  const { email, password } = req.body;
+
+  // Email validation
+  const isEmailValid = validator.isEmail(email);
+
+  if (!isEmailValid) {
+    return res.status(400).json({ message: "Invalid email format" });
+  }
+
+  try {
+    const isUserExist = await userModel.findOne({ email });
+
+    if (!isUserExist) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, isUserExist.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
+    const token = jwt.sign({ id: isUserExist._id, user: isUserExist.role }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("token", token);
+    res.status(201).json({ message: "User logged in successfully", user: {id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }});
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error logging in user", error: error.message });
+  }
+}
+
+module.exports = { signup, login };
