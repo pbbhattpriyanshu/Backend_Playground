@@ -58,17 +58,10 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   // Extract email, username, and password from the request body
-  const { email, password } = req.body;
-
-  // Email validation
-  const isEmailValid = validator.isEmail(email);
-
-  if (!isEmailValid) {
-    return res.status(400).json({ message: "Invalid email format" });
-  }
+  const { email, username, password } = req.body;
 
   try {
-    const isUserExist = await userModel.findOne({ email });
+    const isUserExist = await userModel.findOne({ $or: [ {email}, {username} ] });
 
     if (!isUserExist) {
       return res.status(404).json({ message: "User does not exist" });
