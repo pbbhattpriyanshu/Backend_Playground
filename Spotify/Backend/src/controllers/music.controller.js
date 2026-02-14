@@ -21,6 +21,18 @@ const createMusic = async (req, res) => {
   const { uri, title, artist, info } = req.body;
   const file = req.file;
 
+  const result = await uploadFile(file);
 
+  const music = await Music.create({
+    uri: result.url,
+    title,
+    artist,
+    info, 
+    artist: decoded.id,
+  });
 
+  res.status(201).json({ music });
 };
+
+
+module.exports = { createMusic };
