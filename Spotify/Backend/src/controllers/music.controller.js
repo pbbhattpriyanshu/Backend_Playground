@@ -1,6 +1,6 @@
 const Music = require("../models/music.model");
 const uploadFile = require("../services/storage.service");
-const Album = require("../models/album.model");
+const albumModel = require("../models/album.model");
 const jwt = require("jsonwebtoken");
 
 // Create music
@@ -28,13 +28,15 @@ const createMusic = async (req, res) => {
       info
     });
 
-    res.status(201).json({ message: "Music created successfully", music: {
-      id: music._id,
-      uri: music.uri,
-      title: music.title,
-      artist: music.artist,
-      info: music.info
-    } });
+    res.status(201).json({
+      message: "Music created successfully", music: {
+        id: music._id,
+        uri: music.uri,
+        title: music.title,
+        artist: music.artist,
+        info: music.info
+      }
+    });
 
   } catch (error) {
     console.log("Error creating music:", error);
@@ -55,20 +57,22 @@ const createAlbum = async (req, res) => {
 
     if (decoded.role !== "artist") { return res.status(403).json({ message: "You don't have an access to create an album" }); }
 
-    const { title, artist, musics } = req.body;
+    const { title, musics } = req.body;
 
-    const album = await Album.create({
+    const album = await albumModel.create({
       title,
       musics,
       artist: decoded.id
     });
 
-    res.status(201).json({ message: "Album created successfully", album: {
-      id: album._id,
-      title: album.title,
-      artist: album.artist,
-      musics: album.musics
-    } });
+    res.status(201).json({
+      message: "Album created successfully", album: {
+        id: album._id,
+        title: album.title,
+        artist: album.artist,
+        musics: album.musics
+      }
+    });
 
   } catch (error) {
     console.log("Error creating album:", error);
