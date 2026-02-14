@@ -1,5 +1,5 @@
 const express = require("express");
-const { createMusic, createAlbum, getAllMusic } = require("../controllers/music.controller");
+const { createMusic, createAlbum, getAllMusic, getAllAlbum } = require("../controllers/music.controller");
 const { authArtist, authUser } = require("../middlewares/auth.middleware")
 const multer = require("multer");
 
@@ -12,5 +12,6 @@ const upload = multer({
 router.post("/upload", authArtist, upload.single("music"), createMusic);
 router.post("/create-album", authArtist, createAlbum);
 router.get("/", authUser, getAllMusic);
+router.get("/album", authUser, getAllAlbum);
 
 module.exports = router;
