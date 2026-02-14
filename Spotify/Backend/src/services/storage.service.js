@@ -7,7 +7,7 @@ const imagekit  = new ImageKit({
 })
 
 // Function to upload a file
-async function uploadFile(file  ) {
+async function uploadFile(file) {
     try {
         const result = await imagekit.files.upload({
             file: file.buffer.toString('base64'), // Convert buffer to base64 string,
