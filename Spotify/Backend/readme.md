@@ -152,8 +152,12 @@ sequenceDiagram
   ```
 
 #### 3. Get All Music
-- **Endpoint**: `GET /api/music/get-all-music`
-- **Description**: Returns a list of all music tracks (selecting `uri`, `title`, and `artist`).
+- **Endpoint**: `GET /api/music/`
+- **Description**: Returns a limited list (max 2) of music tracks.
+- **Features**:
+  - Uses `.limit(2)` to restrict results.
+  - Uses `.select("uri title artist")` to return specific fields.
+  - Uses `.populate("artist", "username")` to replace the artist ID with the actual username.
 - **Response**:
   ```json
   {
@@ -163,15 +167,40 @@ sequenceDiagram
         "_id": "65ca...",
         "title": "Song Title",
         "uri": "https://ik.imagekit.io/...",
-        "artist": "65aa..."
+        "artist": {
+          "_id": "65aa...",
+          "username": "artist_jane"
+        }
       }
     ]
   }
   ```
 
+### 💿 Albums (`/api/music/album`)
+
+#### 1. Get All Albums
+- **Endpoint**: `GET /api/music/album`
+- **Description**: Fetches all albums with artist details populated.
+
+#### 2. Get Album By ID
+- **Endpoint**: `GET /api/music/album/:id`
+- **Description**: Fetches a single album, populating both the `artist` (username) and `musics` (uri, title, artist) details.
+
 ---
 
-## 🛠️ Setup & Installation
+### � Authentication Updates
+
+#### 3. Logout
+- **Endpoint**: `POST /api/auth/logout`
+- **Description**: Clears the authentication token cookie.
+
+---
+
+## 🧠 Key Mongoose Concepts Used
+
+- **Population (`.populate()`)**: Automatically replaces a reference ID (like `artist`) in a document with the actual data from the referenced collection (User).
+- **Selection (`.select()`)**: distincts which fields to return or exclude (e.g., returning only `title` and `uri` instead of the whole object).
+- **Limiting (`.limit()`)**: Restricts the number of results returned by a query (used in `getAllMusic` to show only 2 songs).
 
 1.  **Clone the repository**.
 2.  **Install dependencies**:
