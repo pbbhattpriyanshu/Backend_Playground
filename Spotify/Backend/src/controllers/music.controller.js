@@ -14,7 +14,7 @@ const createMusic = async (req, res) => {
     const music = await Music.create({
       uri: result.url,
       title,
-      artist: user.id,
+      artist: req.user.id,
       info
     });
 
@@ -42,7 +42,7 @@ const createAlbum = async (req, res) => {
     const album = await albumModel.create({
       title,
       musics,
-      artist: user.id
+      artist: req.user.id
     });
 
     res.status(201).json({
