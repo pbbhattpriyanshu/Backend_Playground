@@ -60,4 +60,9 @@ const createAlbum = async (req, res) => {
   }
 };
 
-module.exports = { createMusic, createAlbum };
+// Get All music
+const getAllMusic = async (req, res) => {
+  const musics = await Music.find().select("uri title artist");
+  res.status(200).json({ message: "Music fetched successfully", musics });
+}
+module.exports = { createMusic, createAlbum, getAllMusic };
