@@ -4,6 +4,6 @@ const { createMusic } = require("../controllers/music.controller");
 const router = express.Router();
 
 
-router.post("/create", createMusic);
+router.post("/upload", createMusic);
 
 module.exports = router;
