@@ -10,10 +10,10 @@ const imagekit  = new ImageKit({
 async function uploadFile(file  ) {
     try {
         const result = await imagekit.files.upload({
-            file,
+            file: file.buffer.toString('base64'), // Convert buffer to base64 string,
             fileName: "music_" + Date.now(),
             folder: "music",
-        });
+        }); 
         
         return result;
 
