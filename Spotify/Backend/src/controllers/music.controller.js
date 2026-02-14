@@ -61,8 +61,9 @@ const createAlbum = async (req, res) => {
 };
 
 // Get All musics
+// limit to 2
 const getAllMusic = async (req, res) => {
-  const musics = await Music.find().select("uri title artist").populate("artist", "username");
+  const musics = await Music.find().limit(2).select("uri title artist").populate("artist", "username");
   res.status(200).json({ message: "Music fetched successfully", musics });
 }
 
