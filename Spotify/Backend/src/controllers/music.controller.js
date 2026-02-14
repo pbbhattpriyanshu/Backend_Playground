@@ -12,6 +12,8 @@ const createMusic = async (req, res) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    console.log(decoded.role);
+    
     if(decoded.role !== "artist") {return res.status(403).json({ message: "You don't have an access to create a music" }); }
 
   } catch (error) {

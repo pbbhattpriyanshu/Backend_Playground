@@ -43,7 +43,7 @@ const signup = async (req, res) => {
 
     const user = await userModel.create({ email, username, password: hashedPassword, role });
 
-    const token = jwt.sign({ id: user._id, user: user.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -73,7 +73,7 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    const token = jwt.sign({ id: isUserExist._id, user: isUserExist.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: isUserExist._id, role: isUserExist.role }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
