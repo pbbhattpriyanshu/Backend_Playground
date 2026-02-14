@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 // Create music
 const createMusic = async (req, res) => {
-
   try {
     const { uri, title, artist, info } = req.body;
     const file = req.file;
@@ -15,7 +14,7 @@ const createMusic = async (req, res) => {
     const music = await Music.create({
       uri: result.url,
       title,
-      artist: decoded.id,
+      artist: user.id,
       info
     });
 
@@ -37,14 +36,13 @@ const createMusic = async (req, res) => {
 
 // Create album
 const createAlbum = async (req, res) => {
-
   try {
     const { title, musics } = req.body;
 
     const album = await albumModel.create({
       title,
       musics,
-      artist: decoded.id
+      artist: user.id
     });
 
     res.status(201).json({
