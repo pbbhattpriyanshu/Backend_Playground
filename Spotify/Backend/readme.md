@@ -151,6 +151,24 @@ sequenceDiagram
   }
   ```
 
+#### 3. Get All Music
+- **Endpoint**: `GET /api/music/get-all-music`
+- **Description**: Returns a list of all music tracks (selecting `uri`, `title`, and `artist`).
+- **Response**:
+  ```json
+  {
+    "message": "Music fetched successfully",
+    "musics": [
+      {
+        "_id": "65ca...",
+        "title": "Song Title",
+        "uri": "https://ik.imagekit.io/...",
+        "artist": "65aa..."
+      }
+    ]
+  }
+  ```
+
 ---
 
 ## 🛠️ Setup & Installation
